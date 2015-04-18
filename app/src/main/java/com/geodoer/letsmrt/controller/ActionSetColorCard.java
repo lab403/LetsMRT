@@ -45,7 +45,10 @@ public class ActionSetColorCard {
                     card.setBackgroundColorResourceId(R.color.demo_card_background_color1);
                     break;
             }
+            card.setClickable(true);
             card.setOnClickListener(new ActionOnCardClicked());
+            card.setLongClickable(true);
+            card.setOnLongClickListener(new ActionOnCardLongClicked());
             cards.add(card);
         }
         return  cards;
