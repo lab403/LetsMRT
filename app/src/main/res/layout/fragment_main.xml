@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geodoer.letsmrt.view.MainActivity$PlaceholderFragment"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:name="com.geodoer.letsmrt.view.fragment.MapsFragment"
+        android:id="@+id/MapsFragment"
+        android:layout_gravity="center_horizontal"
+        tools:layout="@layout/fragment_map" />
+
+
+    <TextView
+        android:id="@+id/PlaceName"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text=""
+        android:background="#96444444"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:layout_weight="0.5" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:name="com.geodoer.letsmrt.view.fragment.ColorCardFragment"
+        android:id="@+id/ColorCardFragment"
+        tools:layout="@layout/fragment_list_color_card"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.34" />
+</LinearLayout>

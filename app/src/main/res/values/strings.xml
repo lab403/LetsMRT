@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">LetsMRT</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">LetsMRT</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="carddemo_title_list_color">Colored cards</string>
+
+    <string name="header_title_subtitle_lcolored">A list with colored cards</string>
+
+    <string name="header_title_group3">List,Grid and RecyclerView</string>
+
+
+</resources>
