@@ -1,16 +1,28 @@
 package com.geodoer.letsmrt.view.fragment;
 
 import android.app.Activity;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.ActionOnMapFaBtnClicked;
+import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
@@ -27,7 +39,7 @@ public class MapsFragment extends Fragment {
 
     //TODO:設定MAP
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
+    private static MapView mapView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -78,6 +90,28 @@ public class MapsFragment extends Fragment {
         View v =
                 inflater.inflate(R.layout.fragment_map,
                         container, false);
+        MapsInitializer.initialize(getActivity().getApplicationContext());
+
+        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+            case ConnectionResult.SUCCESS:
+//	                 Toast.makeText(getActivity(), "SUCCESS", Toast.LENGTH_SHORT).show();
+                mapView = (MapView) v.findViewById(R.id.map);
+                mapView.onCreate(savedInstanceState);
+                if (mapView != null) {
+                    mapView.onResume();
+                    setUpMapIfNeeded();
+                }
+                break;
+            case ConnectionResult.SERVICE_MISSING:
+//	                 Toast.makeText(getActivity(), "SERVICE MISSING", Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+//	                 Toast.makeText(getActivity(), "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
+        }
+
         setFaBtn(v);
         return v;
     }
@@ -133,11 +167,59 @@ public class MapsFragment extends Fragment {
                     = (FloatingActionButton) v.findViewById(R.id.faBtn_getMyLoc);
             faBtn_add.attachToScrollView(mScrollView);
             faBtn_add.setType(FloatingActionButton.TYPE_MINI);
-            faBtn_add.setColorNormalResId(R.color.demo_card_background_color1);
-            faBtn_add.setColorPressedResId(R.color.demo_card_background_color2);
-            faBtn_add.setColorRipple(R.color.card_backgroundExpand);
-            faBtn_add.setOnClickListener(new ActionOnMapFaBtnClicked());
+            faBtn_add.setColorNormalResId(R.color.md_blue_grey_50);
+            faBtn_add.setColorPressedResId(R.color.md_blue_grey_200);
+            faBtn_add.setColorRipple(R.color.md_blue_grey_50);
+            faBtn_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getNowLoc();
+                }
+            });
         }
+    }
+
+    private void setUpMapIfNeeded() {
+        mMap = mapView.getMap();
+        if (mMap == null) {
+            Log.d("", "googleMap is null !!!!!!!!!!!!!!!");
+        } else {
+//            map gps不會停止Bug使用自幹的GPS成
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            getNowLoc();
+        }
+    }
+
+    private void getNowLoc(){
+        CurrentLocation mNowGeo = new CurrentLocation(getActivity());
+        mNowGeo.setOnLocListenerSetGps("0", new CurrentLocation.onDistanceListener() {
+            @Override
+            public void onGetLatLng(Double lat, Double lng) {
+                LatLng nowLoacation;
+                nowLoacation = new LatLng(lat, lng);
+//                    mMap.addMarker(new MarkerOptions().title("當前位置").draggable(true)
+//                            .position(nowLoacation)).showInfoWindow();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nowLoacation,
+                        mMap.getMaxZoomLevel() - 8));
+            }
+
+            @Override
+            public void onGetLatLng(final Location loc) {
+                mMap.setLocationSource(new LocationSource() {
+                    @Override
+                    public void activate(OnLocationChangedListener onLocationChangedListener) {
+                        onLocationChangedListener.onLocationChanged(loc);
+                    }
+
+                    @Override
+                    public void deactivate() {
+
+                    }
+                });
+            }
+        });
     }
 }
 
