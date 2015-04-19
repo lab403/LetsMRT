@@ -173,7 +173,7 @@ public class MapsFragment extends Fragment {
             faBtn_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getNowLoc();
+                    getNowLoc("0");
                 }
             });
         }
@@ -188,13 +188,18 @@ public class MapsFragment extends Fragment {
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             mMap.getUiSettings().setZoomControlsEnabled(true);
-            getNowLoc();
+            getNowLoc("0");
         }
     }
 
-    private void getNowLoc(){
+
+    /**
+     * 獲取現在距離,先使用GPS再使用網路最後才使用上次位置，獲取後關閉GPS，達到省電的效果
+     * @param acc 調整精準度"１"先使用GPS，"０"直接使用網路，"-1"直接使用上次位置
+     */
+    private void getNowLoc(String acc){
         CurrentLocation mNowGeo = new CurrentLocation(getActivity());
-        mNowGeo.setOnLocListenerSetGps("0", new CurrentLocation.onDistanceListener() {
+        mNowGeo.setOnLocListenerSetGps(acc, new CurrentLocation.onDistanceListener() {
             @Override
             public void onGetLatLng(Double lat, Double lng) {
                 LatLng nowLoacation;
