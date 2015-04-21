@@ -32,4 +32,6 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     // http
     compile 'com.koushikdutta.ion:ion:2.+'
+    // ParallaxScroll
+    compile 'com.github.nirhart:parallaxscroll:1.0'
 }

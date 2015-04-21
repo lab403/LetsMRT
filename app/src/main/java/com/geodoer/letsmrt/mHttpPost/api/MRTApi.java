@@ -14,10 +14,12 @@ public class MRTApi {
     String url = "http://data.kaohsiung.gov.tw/Opendata/MrtJsonGet.aspx?site=";
     public String getUrl;
     public MRT mrt;
+    public int disRank;
     Context context;
 
-    public MRTApi(Context context,int site,MRT mrt) {
+    public MRTApi(Context context,int disRank,int site,MRT mrt) {
         this.context = context;
+        this.disRank =disRank;
         this.site = site;
         this.mrt = mrt;
         this.getUrl = url+site;
