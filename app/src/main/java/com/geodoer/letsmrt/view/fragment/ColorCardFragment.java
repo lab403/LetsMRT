@@ -154,6 +154,9 @@ public class ColorCardFragment extends Fragment {
         if (listView != null) {
             listView.setAdapter(mCardArrayAdapter);
         }
+
+        fixCards.setListViewHeightBasedOnChildren(listView);
+
     }
 }
 

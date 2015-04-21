@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.view.MainActivity;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,7 +41,6 @@ public class PlaceholderFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
         return rootView;
     }
 

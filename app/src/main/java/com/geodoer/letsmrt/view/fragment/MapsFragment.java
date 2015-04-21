@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class MapsFragment extends Fragment {
 
     //TODO:設定MAP
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    public GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static MyMapView mapView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -30,11 +30,36 @@ public class MRTApi {
         JsonArray allTime = result.getAsJsonArray("MRT");
         MRTArrivalTime time = new MRTArrivalTime();
 
-        time.setToR24ArrTime(allTime.get(0).getAsJsonObject().get("arrival").getAsInt());
-        time.setNextToR24ArrTime(allTime.get(0).getAsJsonObject().get("next_arrival").getAsInt());
+        try {
+            time.setToR24ArrTime(Integer.parseInt(allTime.get(0).getAsJsonObject().get("arrival").getAsString()));
+        }catch (Exception e){
+            time.setToR24ArrTime(0);
+        }
 
-        time.setToR3ArrTime(allTime.get(1).getAsJsonObject().get("arrival").getAsInt());
-        time.setNextToR3ArrTime(allTime.get(1).getAsJsonObject().get("next_arrival").getAsInt());
+        try {
+            time.setToR24ArrTime(Integer.parseInt(allTime.get(0).getAsJsonObject().get("next_arrival").getAsString()));
+        }catch (Exception e){
+            time.setToR24ArrTime(0);
+        }
+
+
+        try {
+            time.setToR3ArrTime(Integer.parseInt(allTime.get(1).getAsJsonObject().get("arrival").getAsString()));
+        }catch (Exception e){
+            time.setToR3ArrTime(0);
+        }
+
+        try {
+            time.setToR3ArrTime(Integer.parseInt(allTime.get(1).getAsJsonObject().get("next_arrival").getAsString()));
+        }catch (Exception e){
+            time.setToR3ArrTime(0);
+        }
+
+
+
+//        time.setNextToR24ArrTime(allTime.get(0).getAsJsonObject().get("next_arrival").getAsInt());
+//        time.setToR3ArrTime(allTime.get(1).getAsJsonObject().get("arrival").getAsInt());
+//        time.setNextToR3ArrTime(allTime.get(1).getAsJsonObject().get("next_arrival").getAsInt());
 
         return time;
     }
