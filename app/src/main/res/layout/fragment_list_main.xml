@@ -11,5 +11,6 @@
         app:parallax_factor="1.9"
         android:id="@+id/list_view"
         tools:context=".MainActivity">
+
     </com.nirhart.parallaxscroll.views.ParallaxListView >
 </com.yalantis.taurus.PullToRefreshView>
