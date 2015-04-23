@@ -38,7 +38,7 @@ public class MRTApi {
         }
 
         try {
-            time.setToR24ArrTime(Integer.parseInt(allTime.get(0).getAsJsonObject().get("next_arrival").getAsString()));
+            time.setNextToR24ArrTime(Integer.parseInt(allTime.get(0).getAsJsonObject().get("next_arrival").getAsString()));
         }catch (Exception e){
             time.setToR24ArrTime(0);
         }
@@ -51,7 +51,7 @@ public class MRTApi {
         }
 
         try {
-            time.setToR3ArrTime(Integer.parseInt(allTime.get(1).getAsJsonObject().get("next_arrival").getAsString()));
+            time.setNextToR3ArrTime(Integer.parseInt(allTime.get(1).getAsJsonObject().get("next_arrival").getAsString()));
         }catch (Exception e){
             time.setToR3ArrTime(0);
         }

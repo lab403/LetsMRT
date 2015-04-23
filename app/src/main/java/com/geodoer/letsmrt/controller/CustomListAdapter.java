@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.geodoer.letsmrt.R;
+import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
+
+import java.util.ArrayList;
 
 /**
  * Created by fud on 2015/4/23.
@@ -14,18 +17,21 @@ import com.geodoer.letsmrt.R;
 public class CustomListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
+    ArrayList<MRTArrivalTime> mList;
 
-    public CustomListAdapter(LayoutInflater inflater) {
+    public CustomListAdapter(LayoutInflater inflater,ArrayList<MRTArrivalTime> mList) {
         this.inflater = inflater;
+        this.mList = mList;
     }
 
-    public void reFresh(){
-
+    public void reFresh(ArrayList<MRTArrivalTime> mList){
+        this.mList =mList;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return mList.size();
     }
 
     @Override
@@ -56,7 +62,7 @@ public class CustomListAdapter extends BaseAdapter {
                     break;
             }
         }
-        textView.setText("Item " + position);
+        textView.setText(mList.get(position).mrt.MRT_CN_STATION_NAME);
         return textView;
     }
 }

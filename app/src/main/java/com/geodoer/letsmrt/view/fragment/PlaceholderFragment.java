@@ -2,32 +2,31 @@ package com.geodoer.letsmrt.view.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.CustomListAdapter;
 import com.geodoer.letsmrt.controller.mGetNowLoc;
+import com.geodoer.letsmrt.mMRTInfo.MRT;
+import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
+import com.geodoer.letsmrt.mMRTInfo.MRT_Info;
 import com.geodoer.letsmrt.view.MainActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 import com.yalantis.taurus.PullToRefreshView;
+
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -43,6 +42,8 @@ public class PlaceholderFragment extends Fragment
     public GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static MyMapView mapView;
     ParallaxListView listView;
+    ArrayList<MRTArrivalTime> mList;
+    CustomListAdapter adapter;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -107,8 +108,10 @@ public class PlaceholderFragment extends Fragment
                 Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
         }
 
-
-        CustomListAdapter adapter = new CustomListAdapter(LayoutInflater.from(getActivity()));
+        mList = new ArrayList<MRTArrivalTime>();
+        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
+        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
+        adapter = new CustomListAdapter(LayoutInflater.from(getActivity()),mList);
         listView.setDivider(null);
         listView.addParallaxedHeaderView(mapView);
         listView.setAdapter(adapter);
@@ -139,7 +142,7 @@ public class PlaceholderFragment extends Fragment
                     mMap.getMaxZoomLevel() - 8));
 //            getNowLoc("0",1);
             mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
-            nowLoc.getNowLoc("-1",1);
+            nowLoc.getNowLoc("-1",1,mList,adapter);
         }
 
     }

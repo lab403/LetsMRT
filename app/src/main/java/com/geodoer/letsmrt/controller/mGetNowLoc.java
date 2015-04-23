@@ -2,6 +2,8 @@ package com.geodoer.letsmrt.controller;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
+import android.widget.ListView;
 
 import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
 import com.geodoer.letsmrt.mGeoInfo.controller.SortDisToStation;
@@ -78,6 +80,75 @@ public class mGetNowLoc {
                                                     .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
                                                             "往小港"+time.toR3ArrTime+"分鐘後到站"));
                                         }
+                                    }
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onGetLatLng(final Location loc) {
+                mMap.setLocationSource(new LocationSource() {
+                    @Override
+                    public void activate(OnLocationChangedListener onLocationChangedListener) {
+                        onLocationChangedListener.onLocationChanged(loc);
+                    }
+
+                    @Override
+                    public void deactivate() {
+
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    public void getNowLoc(String acc, final int who, final ArrayList<MRTArrivalTime> mlist , final CustomListAdapter adapter){
+        CurrentLocation mNowGeo = new CurrentLocation(context);
+        mNowGeo.setOnLocListenerSetGps(acc, new CurrentLocation.onDistanceListener() {
+            @Override
+            public void onGetLatLng(Double lat, Double lng) {
+
+                SortDisToStation mrt = new SortDisToStation(context);
+                final ArrayList<MRT_Dis> allMrt= mrt.sort(lat, lng);
+
+                if(who==0){
+                    LatLng nowLoacation;
+                    nowLoacation = new LatLng(lat, lng);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nowLoacation,
+                            mMap.getMaxZoomLevel() - 8));
+                }else if(who==1){
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(allMrt.get(0).mrt.LATLNG,
+                            mMap.getMaxZoomLevel() - 8));
+                }
+
+                for (int i = 0; i < 5; i++) {
+                    final MRTApi mrtApt = new MRTApi(context,i,allMrt.get(i).mrt.SITE_CODE,allMrt.get(i).mrt);
+                    Ion.with(context)
+                            .load(mrtApt.getUrl)
+                            .asJsonObject()
+                            .setCallback(new FutureCallback<JsonObject>() {
+                                @Override
+                                public void onCompleted(Exception e, JsonObject result) {
+                                    if(e==null){
+                                        MRTArrivalTime time = mrtApt.jsonDecode(result);
+                                        if(mrtApt.disRank==0){
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(mrtApt.mrt.LATLNG)
+                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
+                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"))
+                                                    .showInfoWindow();
+//                                            mlist.add(time);
+                                        }else{
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(mrtApt.mrt.LATLNG)
+                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
+                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"));
+//                                            mlist.add(time);
+                                        }
+//                                        adapter.reFresh(mlist);
                                     }
                                 }
                             });
