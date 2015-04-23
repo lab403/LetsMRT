@@ -156,7 +156,6 @@ public class ColorCardFragment extends Fragment {
         }
 
         fixCards.setListViewHeightBasedOnChildren(listView);
-
     }
 }
 

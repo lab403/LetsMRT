@@ -241,18 +241,20 @@ public class MapsFragment extends Fragment {
                             .setCallback(new FutureCallback<JsonObject>() {
                                 @Override
                                 public void onCompleted(Exception e, JsonObject result) {
-                                    MRTArrivalTime time = mrtApt.jsonDecode(result);
-                                    if(mrtApt.disRank==0){
-                                        mMap.addMarker(new MarkerOptions()
-                                                .position(mrtApt.mrt.LATLNG)
-                                                .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
-                                                        "往小港"+time.toR3ArrTime+"分鐘後到站"))
-                                        .showInfoWindow();
-                                    }else{
-                                        mMap.addMarker(new MarkerOptions()
-                                                .position(mrtApt.mrt.LATLNG)
-                                                .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
-                                                        "往小港"+time.toR3ArrTime+"分鐘後到站"));
+                                    if(e==null){
+                                        MRTArrivalTime time = mrtApt.jsonDecode(result);
+                                        if(mrtApt.disRank==0){
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(mrtApt.mrt.LATLNG)
+                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
+                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"))
+                                                    .showInfoWindow();
+                                        }else{
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(mrtApt.mrt.LATLNG)
+                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
+                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"));
+                                        }
                                     }
                                 }
                             });
