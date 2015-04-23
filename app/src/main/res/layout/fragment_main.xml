@@ -18,7 +18,7 @@
 
                 <fragment
                     android:layout_width="match_parent"
-                    android:layout_height="215dp"
+                    android:layout_height="320dp"
                     android:name="com.geodoer.letsmrt.view.fragment.MapsFragment"
                     android:id="@+id/MapsFragment"
                     android:layout_gravity="center_horizontal"
