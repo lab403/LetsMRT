@@ -14,7 +14,6 @@ import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.ActionSetColorCard;
 import com.geodoer.letsmrt.controller.mCardArrayAdapter;
 import com.google.android.gms.maps.GoogleMap;
-
 import it.gmariotti.cardslib.library.view.CardListView;
 
 
@@ -83,6 +82,7 @@ public class ColorCardFragment extends Fragment {
         View v =
                 inflater.inflate(R.layout.fragment_list_color_card,
                         container, false);
+
         return v;
     }
 

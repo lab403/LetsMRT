@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.view.MainActivity;
+import com.yalantis.taurus.PullToRefreshView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -23,6 +24,7 @@ public class PlaceholderFragment extends Fragment
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    PullToRefreshView mPullToRefreshView;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -45,6 +47,18 @@ public class PlaceholderFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        mPullToRefreshView = (PullToRefreshView) rootView.findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 4000);
+            }
+        });
         return rootView;
     }
 
