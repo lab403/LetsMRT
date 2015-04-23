@@ -11,11 +11,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.CustomListAdapter;
+import com.geodoer.letsmrt.controller.mGetNowLoc;
 import com.geodoer.letsmrt.view.MainActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -40,6 +42,7 @@ public class PlaceholderFragment extends Fragment
     PullToRefreshView mPullToRefreshView;
     public GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static MyMapView mapView;
+    ParallaxListView listView;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -70,14 +73,15 @@ public class PlaceholderFragment extends Fragment
                     @Override
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
+                        mMap.clear();
+                        mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
+                        nowLoc.getNowLoc("-1",1);
                     }
-                }, 4000);
+                }, 2000);
             }
         });
-        ParallaxListView listView = (ParallaxListView) rootView.findViewById(R.id.list_view);
-        CustomListAdapter adapter = new CustomListAdapter(LayoutInflater.from(getActivity()));
 
-
+        listView = (ParallaxListView) rootView.findViewById(R.id.list_view);
         MapsInitializer.initialize(getActivity().getApplicationContext());
 
         switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
@@ -103,12 +107,8 @@ public class PlaceholderFragment extends Fragment
                 Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
         }
 
-//        TextView v = new TextView(getActivity());
-//        v.setText("PARALLAXED");
-//        v.setGravity(Gravity.CENTER);
-//        v.setTextSize(40);
-//        v.setHeight(200);
 
+        CustomListAdapter adapter = new CustomListAdapter(LayoutInflater.from(getActivity()));
         listView.setDivider(null);
         listView.addParallaxedHeaderView(mapView);
         listView.setAdapter(adapter);
@@ -138,6 +138,8 @@ public class PlaceholderFragment extends Fragment
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowLoacation,
                     mMap.getMaxZoomLevel() - 8));
 //            getNowLoc("0",1);
+            mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
+            nowLoc.getNowLoc("-1",1);
         }
 
     }

@@ -19,9 +19,13 @@ public class CustomListAdapter extends BaseAdapter {
         this.inflater = inflater;
     }
 
+    public void reFresh(){
+
+    }
+
     @Override
     public int getCount() {
-        return 8;
+        return 5;
     }
 
     @Override

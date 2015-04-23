@@ -1,4 +1,4 @@
-package com.geodoer.letsmrt.mHttpPost.api;
+package com.geodoer.letsmrt.mMRTInfo;
 
 /**
  * Created by fud on 2015/4/19.
@@ -11,8 +11,12 @@ public class MRTArrivalTime {
     public int toR3ArrTime ;
     public int nextToR3ArrTime;
 
-    public MRTArrivalTime() {
+    public MRT mrt;
+    public int disRank;
 
+    public MRTArrivalTime(MRT mrt, int disRank) {
+        this.mrt = mrt;
+        this.disRank =disRank;
     }
 
     public void setToR24ArrTime(int toR24ArrTime) {

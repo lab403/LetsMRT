@@ -3,6 +3,7 @@ package com.geodoer.letsmrt.mHttpPost.api;
 import android.content.Context;
 
 import com.geodoer.letsmrt.mMRTInfo.MRT;
+import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -28,7 +29,7 @@ public class MRTApi {
 
     public MRTArrivalTime jsonDecode(JsonObject result){
         JsonArray allTime = result.getAsJsonArray("MRT");
-        MRTArrivalTime time = new MRTArrivalTime();
+        MRTArrivalTime time = new MRTArrivalTime(mrt,disRank);
 
         try {
             time.setToR24ArrTime(Integer.parseInt(allTime.get(0).getAsJsonObject().get("arrival").getAsString()));
