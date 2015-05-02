@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.CustomListAdapter;
 import com.geodoer.letsmrt.controller.mGetNowLoc;
-import com.geodoer.letsmrt.mMRTInfo.MRT;
 import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
 import com.geodoer.letsmrt.mMRTInfo.MRT_Info;
 import com.geodoer.letsmrt.view.MainActivity;
@@ -77,6 +76,9 @@ public class PlaceholderFragment extends Fragment
                         mMap.clear();
                         mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
                         nowLoc.getNowLoc("-1",1);
+                        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
+                        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
+                        adapter.reFresh(mList);
                     }
                 }, 2000);
             }
@@ -142,7 +144,7 @@ public class PlaceholderFragment extends Fragment
                     mMap.getMaxZoomLevel() - 8));
 //            getNowLoc("0",1);
             mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
-            nowLoc.getNowLoc("-1",1,mList,adapter);
+            nowLoc.getNowLoc("-1",1);
         }
 
     }
