@@ -28,23 +28,25 @@ public class MyMapView extends MapView {
         super(context, options);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        int action = ev.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                // Disallow ScrollView to intercept touch events.
-                this.getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-
-            case MotionEvent.ACTION_UP:
-                // Allow ScrollView to intercept touch events.
-                this.getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-        }
-
-        // Handle MapView's touch events.
-        super.onTouchEvent(ev);
-        return true;
-    }
+//-----------change by Murakumo----------------------
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        int action = ev.getAction();
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                // Disallow ScrollView to intercept touch events.
+//                this.getParent().requestDisallowInterceptTouchEvent(true);
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//                // Allow ScrollView to intercept touch events.
+//                this.getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//        }
+//
+//        // Handle MapView's touch events.
+//        super.onTouchEvent(ev);
+//        return true;
+//    }
+//--------------------------------------------------------
 }

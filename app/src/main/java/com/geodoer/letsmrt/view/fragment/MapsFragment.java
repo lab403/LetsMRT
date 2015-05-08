@@ -7,25 +7,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
-import com.geodoer.letsmrt.controller.ActionOnMapFaBtnClicked;
 import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
 import com.geodoer.letsmrt.mGeoInfo.controller.SortDisToStation;
 import com.geodoer.letsmrt.mHttpPost.api.MRTApi;
 import com.geodoer.letsmrt.mHttpPost.api.MRTArrivalTime;
-import com.geodoer.letsmrt.mMRTInfo.MRT;
 import com.geodoer.letsmrt.mMRTInfo.MRT_Dis;
+import com.geodoer.letsmrt.view.layout.TouchableLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -46,7 +43,7 @@ import java.util.ArrayList;
  * Use the {@link MapsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment{
 
     //TODO:設定MAP
     public GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -61,6 +58,8 @@ public class MapsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private TouchableLayout mTW;
 
     /**
      * Use this factory method to create a new instance of
@@ -97,6 +96,8 @@ public class MapsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mTW = new TouchableLayout(getActivity());
         // Inflate the layout for this fragment
         View v =
                 inflater.inflate(R.layout.fragment_map,
@@ -124,7 +125,8 @@ public class MapsFragment extends Fragment {
         }
 
         setFaBtn(v);
-        return v;
+        mTW.addView(v);
+        return mTW;
     }
 
     @Override
@@ -143,6 +145,7 @@ public class MapsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
