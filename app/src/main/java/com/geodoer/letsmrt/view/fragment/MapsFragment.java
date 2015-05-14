@@ -11,24 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
-<<<<<<< HEAD
 import com.geodoer.letsmrt.controller.mGetNowLoc;
-=======
-import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
-import com.geodoer.letsmrt.mGeoInfo.controller.SortDisToStation;
-import com.geodoer.letsmrt.mHttpPost.api.MRTApi;
-import com.geodoer.letsmrt.mHttpPost.api.MRTArrivalTime;
-import com.geodoer.letsmrt.mMRTInfo.MRT_Dis;
 import com.geodoer.letsmrt.view.layout.TouchableLayout;
->>>>>>> origin/devHem
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-<<<<<<< HEAD
-=======
-import com.google.android.gms.maps.LocationSource;
->>>>>>> origin/devHem
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.melnykov.fab.FloatingActionButton;
