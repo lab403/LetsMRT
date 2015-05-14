@@ -9,12 +9,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.view.fragment.ColorCardFragment;
 import com.geodoer.letsmrt.view.fragment.MapsFragment;
 import com.geodoer.letsmrt.view.fragment.NavigationDrawerFragment;
 import com.geodoer.letsmrt.view.fragment.PlaceholderFragment;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements
@@ -144,5 +147,4 @@ public class MainActivity extends ActionBarActivity implements
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 }
