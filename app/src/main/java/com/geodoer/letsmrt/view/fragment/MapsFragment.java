@@ -85,7 +85,7 @@ public class MapsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mTW = new TouchableLayout(getActivity());
+        //mTW = new TouchableLayout(getActivity());
         // Inflate the layout for this fragment
         View v =
                 inflater.inflate(R.layout.fragment_map,
@@ -113,8 +113,8 @@ public class MapsFragment extends Fragment{
         }
 
         setFaBtn(v);
-        mTW.addView(v);
-        return mTW;
+        //mTW.addView(v);
+        return v;
     }
 
     @Override

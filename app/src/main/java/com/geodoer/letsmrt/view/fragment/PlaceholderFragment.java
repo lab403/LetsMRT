@@ -121,12 +121,15 @@ public class PlaceholderFragment extends Fragment
         mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
         adapter = new CustomListAdapter(LayoutInflater.from(getActivity()),mList);
         listView.setDivider(null);
-        listView.addParallaxedHeaderView(mapView);
+
+        mTW.addView(mapView);
+
+        listView.addParallaxedHeaderView(mTW);
         listView.setAdapter(adapter);
 
-        mTW.addView(rootView);
+        //mTW.addView(rootView);
 
-        return mTW;
+        return rootView;
     }
 
     @Override
