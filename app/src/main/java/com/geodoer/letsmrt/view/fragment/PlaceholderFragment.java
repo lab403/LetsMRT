@@ -16,6 +16,7 @@ import com.geodoer.letsmrt.controller.mGetNowLoc;
 import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
 import com.geodoer.letsmrt.mMRTInfo.MRT_Info;
 import com.geodoer.letsmrt.view.MainActivity;
+import com.geodoer.letsmrt.view.layout.TouchableLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +45,8 @@ public class PlaceholderFragment extends Fragment
     ArrayList<MRTArrivalTime> mList;
     CustomListAdapter adapter;
 
+    private TouchableLayout mTW;
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -64,6 +67,9 @@ public class PlaceholderFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mTW = new TouchableLayout(getActivity());
+
         rootView = inflater.inflate(R.layout.fragment_list_main, container, false);
         mPullToRefreshView = (PullToRefreshView) rootView.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
@@ -118,7 +124,9 @@ public class PlaceholderFragment extends Fragment
         listView.addParallaxedHeaderView(mapView);
         listView.setAdapter(adapter);
 
-        return rootView;
+        mTW.addView(rootView);
+
+        return mTW;
     }
 
     @Override
