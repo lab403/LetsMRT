@@ -62,7 +62,9 @@ public class CustomListAdapter extends BaseAdapter {
                     break;
             }
         }
-        textView.setText(mList.get(position).mrt.MRT_CN_STATION_NAME);
+        textView.setText(mList.get(position).mrt.MRT_CN_STATION_NAME+","+
+                mList.get(position).toR24ArrTime+","+
+                mList.get(position).toR3ArrTime);
         return textView;
     }
 }

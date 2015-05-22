@@ -14,7 +14,6 @@ import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.CustomListAdapter;
 import com.geodoer.letsmrt.controller.mGetNowLoc;
 import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
-import com.geodoer.letsmrt.mMRTInfo.MRT_Info;
 import com.geodoer.letsmrt.view.MainActivity;
 import com.geodoer.letsmrt.view.layout.TouchableLayout;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,11 +26,13 @@ import com.nirhart.parallaxscroll.views.ParallaxListView;
 import com.yalantis.taurus.PullToRefreshView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment
+public class PlaceholderFragment extends Fragment implements mGetNowLoc.onGetTimeListener
 {
     /**
      * The fragment argument representing the section number for this
@@ -43,7 +44,10 @@ public class PlaceholderFragment extends Fragment
     private static MyMapView mapView;
     ParallaxListView listView;
     ArrayList<MRTArrivalTime> mList;
+    ArrayList<MRTArrivalTime> mBufferList;
     CustomListAdapter adapter;
+    mGetNowLoc nowLoc;
+    int maxMRT=5;
 
     private TouchableLayout mTW;
 
@@ -80,11 +84,10 @@ public class PlaceholderFragment extends Fragment
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
                         mMap.clear();
-                        mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
-                        nowLoc.getNowLoc("-1",1);
-                        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
-                        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
-                        adapter.reFresh(mList);
+                        nowLoc.getNowLoc("0", 1);
+//                        mList.add(0, new MRTArrivalTime(new MRT_Info().getMRT(0), 0));
+//                        mList.add(1, new MRTArrivalTime(new MRT_Info().getMRT(2), 2));
+//                        adapter.reFresh(mList);
                     }
                 }, 2000);
             }
@@ -117,8 +120,9 @@ public class PlaceholderFragment extends Fragment
         }
 
         mList = new ArrayList<MRTArrivalTime>();
-        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
-        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
+        mBufferList = new ArrayList<MRTArrivalTime>();
+//        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
+//        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
         adapter = new CustomListAdapter(LayoutInflater.from(getActivity()),mList);
         listView.setDivider(null);
 
@@ -154,10 +158,38 @@ public class PlaceholderFragment extends Fragment
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowLoacation,
                     mMap.getMaxZoomLevel() - 8));
 //            getNowLoc("0",1);
-            mGetNowLoc nowLoc = new mGetNowLoc(getActivity(),mMap);
-            nowLoc.getNowLoc("-1",1);
+            nowLoc = new mGetNowLoc(getActivity(),mMap);
+            nowLoc.getNowLoc("0",1);
+            nowLoc.setOnStatusListener(this);
         }
 
     }
 
+    @Override
+    public void onGetTime(MRTArrivalTime MRT) {
+        if(MRT!=null)
+            mBufferList.add(MRT);
+        if(mBufferList.size() == maxMRT){
+            Collections.sort(mBufferList, new Comparator<MRTArrivalTime>() {
+                @Override
+                public int compare(MRTArrivalTime a, MRTArrivalTime b) {
+                    return a.disRank > b.disRank ? 1 : -1;
+                }
+            });
+
+            if(mList.size()<maxMRT){
+                for (int i = 0; i < mBufferList.size(); i++) {
+                    mList.add(i, mBufferList.get(i));
+                }
+            }else{
+                for (int i = 0; i < mBufferList.size(); i++) {
+                    mList.set(i, mBufferList.get(i));
+                }
+            }
+//            mList = mBufferList;
+            adapter.reFresh(mList);
+            mBufferList.clear();
+
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.geodoer.letsmrt.controller;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
 import com.geodoer.letsmrt.mGeoInfo.controller.SortDisToStation;
@@ -33,15 +34,15 @@ public class mGetNowLoc {
     }
 
 
-//    private onGetTimeListener status =null;
-//
-//    public interface onGetTimeListener{
-//        public void onGetTime(MRTArrivalTime MRT);
-//    }
-//
-//    public void setOnStatusListener(onGetTimeListener l){
-//        this.status = l;
-//    }
+    private onGetTimeListener status =null;
+
+    public interface onGetTimeListener{
+        public void onGetTime(MRTArrivalTime MRT);
+    }
+
+    public void setOnStatusListener(onGetTimeListener l){
+        this.status = l;
+    }
 
     /**
      * 獲取現在距離,先使用GPS再使用網路最後才使用上次位置，獲取後關閉GPS，達到省電的效果
@@ -89,9 +90,10 @@ public class mGetNowLoc {
                                                     .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
                                                             "往小港"+time.toR3ArrTime+"分鐘後到站"));
                                         }
-//                                        status.onGetTime(time);
+                                        Log.d("Test",time.mrt.MRT_CN_STATION_NAME );
+                                        status.onGetTime(time);
                                     }else{
-//                                        status.onGetTime(null);
+                                        status.onGetTime(null);
                                     }
                                 }
                             });
