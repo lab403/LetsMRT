@@ -1,6 +1,5 @@
 package com.geodoer.letsmrt.view.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.controller.CustomListAdapter;
 import com.geodoer.letsmrt.controller.mGetNowLoc;
 import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
-import com.geodoer.letsmrt.view.MainActivity;
 import com.geodoer.letsmrt.view.layout.TouchableLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -121,8 +119,6 @@ public class PlaceholderFragment extends Fragment implements mGetNowLoc.onGetTim
 
         mList = new ArrayList<MRTArrivalTime>();
         mBufferList = new ArrayList<MRTArrivalTime>();
-//        mList.add(0,new MRTArrivalTime(new MRT_Info().getMRT(0),0));
-//        mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
         adapter = new CustomListAdapter(LayoutInflater.from(getActivity()),mList);
         listView.setDivider(null);
 
@@ -136,13 +132,13 @@ public class PlaceholderFragment extends Fragment implements mGetNowLoc.onGetTim
         return rootView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
-
-    }
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        ((MainActivity) activity).onSectionAttached(
+//                getArguments().getInt(ARG_SECTION_NUMBER));
+//
+//    }
 
     private void setUpMapIfNeeded() {
         mMap = mapView.getMap();
