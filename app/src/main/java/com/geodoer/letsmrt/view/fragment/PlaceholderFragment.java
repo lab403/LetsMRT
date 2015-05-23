@@ -3,11 +3,14 @@ package com.geodoer.letsmrt.view.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.AndroidCharacter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.geodoer.letsmrt.R;
@@ -21,6 +24,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
@@ -62,6 +66,14 @@ public class PlaceholderFragment extends Fragment
     public PlaceholderFragment() {
     }
 
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        getActivity().getWindow().setFlags(
+//                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+//                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+//    }
 
     View rootView;
     @Override
@@ -69,8 +81,10 @@ public class PlaceholderFragment extends Fragment
                              Bundle savedInstanceState) {
 
         mTW = new TouchableLayout(getActivity());
+        mTW.setBackgroundColor(android.R.color.holo_blue_dark);
 
         rootView = inflater.inflate(R.layout.fragment_list_main, container, false);
+
         mPullToRefreshView = (PullToRefreshView) rootView.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -98,8 +112,12 @@ public class PlaceholderFragment extends Fragment
 //	                 Toast.makeText(getActivity(), "SUCCESS", Toast.LENGTH_SHORT).show();
                 mapView = new MyMapView(getActivity());
 //                mapView.setLayoutParams(new MapView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,320));
-                AbsListView.LayoutParams a = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,700);
+
+//                AbsListView.LayoutParams a = new AbsListView.LayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT,700);
+                RelativeLayout.LayoutParams a = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,700);
+                a.setMargins(0, -100,0,-100);
                 mapView.setLayoutParams(a);
+
                 mapView.onCreate(savedInstanceState);
                 if (mapView != null) {
                     mapView.onResume();
@@ -121,12 +139,14 @@ public class PlaceholderFragment extends Fragment
         mList.add(1,new MRTArrivalTime(new MRT_Info().getMRT(2),2));
         adapter = new CustomListAdapter(LayoutInflater.from(getActivity()),mList);
         listView.setDivider(null);
-        listView.addParallaxedHeaderView(mapView);
+
+        mTW.addView(mapView);
+        listView.addParallaxedHeaderView(mTW);
         listView.setAdapter(adapter);
 
-        mTW.addView(rootView);
+        //mTW.addView(rootView);
 
-        return mTW;
+        return rootView;
     }
 
     @Override
