@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
+import com.geodoer.letsmrt.R;
 import com.geodoer.letsmrt.mGeoInfo.api.CurrentLocation;
 import com.geodoer.letsmrt.mGeoInfo.controller.SortDisToStation;
 import com.geodoer.letsmrt.mHttpPost.api.MRTApi;
@@ -12,6 +13,7 @@ import com.geodoer.letsmrt.mMRTInfo.MRT_Dis;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
@@ -78,17 +80,28 @@ public class mGetNowLoc {
                                 public void onCompleted(Exception e, JsonObject result) {
                                     if(e==null){
                                         MRTArrivalTime time = mrtApt.jsonDecode(result);
+                                        String toA="";
+                                        String toB="";
+                                        if(mrtApt.mrt.SITE_CODE<200){
+                                            toA="往岡山";
+                                            toB="往小港";
+                                        }else{
+                                            toA="往大寮";
+                                            toB="西子灣";
+                                        }
                                         if(mrtApt.disRank==0){
                                             mMap.addMarker(new MarkerOptions()
                                                     .position(mrtApt.mrt.LATLNG)
-                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
-                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"))
+                                                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.khmrt_logo))
+                                                    .title(toA+ time.toR24ArrTime + "分鐘後到站," +
+                                                            toB + time.toR3ArrTime + "分鐘後到站"))
                                                     .showInfoWindow();
                                         }else{
                                             mMap.addMarker(new MarkerOptions()
                                                     .position(mrtApt.mrt.LATLNG)
-                                                    .title( "往岡山"+time.toR24ArrTime+"分鐘後到站,"+
-                                                            "往小港"+time.toR3ArrTime+"分鐘後到站"));
+                                                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.khmrt_logo))
+                                                    .title(toA+ time.toR24ArrTime + "分鐘後到站," +
+                                                            toB + time.toR3ArrTime + "分鐘後到站"));
                                         }
                                         Log.d("Test",time.mrt.MRT_CN_STATION_NAME );
                                         status.onGetTime(time);

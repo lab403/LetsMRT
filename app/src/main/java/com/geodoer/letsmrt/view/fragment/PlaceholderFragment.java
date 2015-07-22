@@ -19,6 +19,7 @@ import com.geodoer.letsmrt.mMRTInfo.MRTArrivalTime;
 import com.geodoer.letsmrt.view.layout.TouchableLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.data.DataHolder;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -115,7 +116,7 @@ public class PlaceholderFragment extends Fragment implements mGetNowLoc.onGetTim
 //                mapView.setLayoutParams(new MapView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,320));
 
 //                AbsListView.LayoutParams a = new AbsListView.LayoutParams(ViewGroup.MarginLayoutParams.WRAP_CONTENT,700);
-                RelativeLayout.LayoutParams a = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,700);
+                RelativeLayout.LayoutParams a = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,600);
                 a.setMargins(0, -100,0,-100);
                 mapView.setLayoutParams(a);
 
@@ -192,15 +193,23 @@ public class PlaceholderFragment extends Fragment implements mGetNowLoc.onGetTim
 
             if(mList.size()<maxMRT){
                 for (int i = 0; i < mBufferList.size(); i++) {
-                    mList.add(i, mBufferList.get(i));
+                    mList.add(mBufferList.get(i));
                 }
             }else{
                 for (int i = 0; i < mBufferList.size(); i++) {
                     mList.set(i, mBufferList.get(i));
                 }
+
             }
-//            mList = mBufferList;
-            adapter.reFresh(mList);
+//            adapter.reFresh(mList);
+////            mList = mBufferList;
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.reFresh(mList);
+                }
+            });
+
             mBufferList.clear();
 
         }

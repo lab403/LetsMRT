@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by fud on 2015/4/18.
  */
 public class MRT_Info {
-    public MRT[] mrt =new MRT[39];
+    public MRT[] mrt =new MRT[38];
 
     public MRT_Info(){
         mrt[0]=new MRT(101,"R3","小港","Siaogang",new LatLng(22.56481191, 120.3538521));
@@ -36,7 +36,7 @@ public class MRT_Info {
         mrt[24]=new MRT(201,"O1","西子灣","Sizihwan",new LatLng(22.62154049, 120.2745284));
         mrt[25]=new MRT(202,"O2","鹽埕埔","Yanchengpu",new LatLng(22.62350135, 120.2837767));
         mrt[26]=new MRT(203,"O4","市議會","City Council",new LatLng(22.62898766, 120.2949347));
-        mrt[27]=new MRT(204,"O5","美麗島","Formosa Boulevard",new LatLng(22.631386, 120.301951));
+        mrt[27]=new MRT(204,"O5","美麗島(橘線)","Formosa Boulevard",new LatLng(22.631386, 120.301951));
         mrt[28]=new MRT(205,"O6","信義國小","Sinyi Elementary School",new LatLng(22.63073055, 120.3116502));
         mrt[29]=new MRT(206,"O7","文化中心","Cultual Center",new LatLng(22.63039386, 120.3174438));
         mrt[30]=new MRT(207,"O8","五塊厝","Wukuaicuo",new LatLng(22.62952241, 120.3277005));
@@ -47,7 +47,7 @@ public class MRT_Info {
         mrt[35]=new MRT(212,"O13","大東","Dadong",new LatLng(22.62538296, 120.3632344));
         mrt[36]=new MRT(213,"O14","鳳山國中","Fongshan Junior High School",new LatLng(22.6248878, 120.3724827));
         mrt[37]=new MRT(214,"OT1","大寮","Daliao",new LatLng(22.62239218, 120.389799));
-        mrt[38]=new MRT(999,"O5/R10","美麗島","Formosa Boulevard",new LatLng(22.631386, 120.301951));
+//        mrt[38]=new MRT(999,"O5/R10","美麗島(橘線)","Formosa Boulevard",new LatLng(22.631386, 120.301951));
     }
 
     public MRT getMRT(int num) {
